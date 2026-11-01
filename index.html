@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trạm Hóa Học - Chinh Phục Tri Thức</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #008080;
+            --primary-dark: #005656;
+            --secondary-color: #0284c7;
+            --accent-color: #f59e0b;
+            --bg-light: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* HEADER & NAVIGATION */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        /* HERO BANNER */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), 
+                        url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+            height: 350px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #d97706;
+        }
+
+        /* MAIN LAYOUT */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 0.5rem auto 0;
+        }
+
+        /* MODULE SECTIONS */
+        .module {
+            display: none;
+        }
+
+        .module.active {
+            display: block;
+        }
+
+        /* CARDS GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        /* BẢNG TUẦN HOÀN STYLING */
+        .ptable-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .element-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .element-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .element-card.nonmetal { border-top: 4px solid #ef4444; }
+        .element-card.metal { border-top: 4px solid #3b82f6; }
+        .element-card.noble { border-top: 4px solid #10b981; }
+
+        .element-number { font-size: 0.8rem; color: var(--text-muted); text-align: left; }
+        .element-symbol { font-size: 1.8rem; font-weight: bold; color: var(--primary-dark); margin: 0.2rem 0; }
+        .element-name { font-size: 0.9rem; font-weight: 500; }
+        .element-mass { font-size: 0.8rem; color: var(--text-muted); }
+
+        .ptable-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+
+        .legend-box {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+        }
+
+        /* QUIZ STYLING */
+        .quiz-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .quiz-option {
+            display: block;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:hover { background: #e2e8f0; }
+
+        .quiz-option.correct {
+            background-color: #dcfce7;
+            border-color: #22c55e;
+            color: #15803d;
+        }
+
+        .quiz-option.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #b91c1c;
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-flask"></i> TRẠM HÓA HỌC
+        </div>
+        <nav>
+            <ul>
+                <li><a onclick="showModule('home')">Trang Chủ</a></li>
+                <li><a onclick="showModule('theory')">Lý Thuyết</a></li>
+                <li><a onclick="showModule('periodic')">Bảng Tuần Hoàn</a></li>
+                <li><a onclick="showModule('practice')">Ôn Tập</a></li>
+                <li><a onclick="showModule('lab')">Thí Nghiệm</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO BANNER -->
+    <section class="hero">
+        <h1>Chinh Phục Tri Thức Hóa Học 11</h1>
+        <p>Hệ thống hỗ trợ tự học, lý thuyết trực quan và trắc nghiệm tương tác dành riêng cho tập thể lớp 11A2.</p>
+        <button class="btn" onclick="showModule('theory')">Bắt Đầu Học Ngay</button>
+    </section>
+
+    <div class="container">
+
+        <!-- MODULE 1: TRANG CHỦ -->
+        <div id="home" class="module active">
+            <h2 class="section-title">Chương Trình Học Nổi Bật</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3><i class="fa-solid fa-scale-balanced"></i> Chương 1: Cân Bằng Hóa Học</h3>
+                    <p>Khái niệm cân bằng, hằng số Kc và nguyên lý chuyển dịch cân bằng Le Chatelier.</p>
+                    <button class="btn" onclick="showModule('theory')">Xem Lý Thuyết</button>
+                </div>
+                <div class="card">
+                    <h3><i class="fa-solid fa-atom"></i> Chương 2: Nitrogen - Sulfur</h3>
+                    <p>Tính chất và ứng dụng của Đơn chất Nitrogen, Ammonia, Muối Ammonium và H<sub>2</sub>SO<sub>4</sub>.</p>
+                    <button class="btn" onclick="showModule('theory')">Xem Lý Thuyết</button>
+                </div>
+                <div class="card">
+                    <h3><i class="fa-solid fa-table-cells"></i> Bảng Tuần Hoàn</h3>
+                    <p>Tra cứu nhanh thông số các nguyên tố quan trọng trong chương trình Hóa lớp 11.</p>
+                    <button class="btn" onclick="showModule('periodic')">Tra Cứu Ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 2: LÝ THUYẾT -->
+        <div id="theory" class="module">
+            <h2 class="section-title">Thư Viện Lý Thuyết Tóm Tắt</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>1. Khái Niệm Cân Bằng Hóa Học</h3>
+                    <p><b>Phản ứng thuận nghịch:</b> Phản ứng xảy ra theo 2 chiều ngược nhau trong cùng điều kiện.</p>
+                    <p><b>Trạng thái cân bằng:</b> Là trạng thái mà tốc độ phản ứng thuận bằng tốc độ phản ứng nghịch (v<sub>t</sub> = v<sub>n</sub>). Nồng độ các chất trong hệ không đổi.</p>
+                    <p><b>Hằng số cân bằng (K<sub>c</sub>):</b> Phụ thuộc vào bản chất phản ứng và nhiệt độ.</p>
+                </div>
+                <div class="card">
+                    <h3>2. Nguyên Lý Le Chatelier</h3>
+                    <p>Một phản ứng thuận nghịch đang ở trạng thái cân bằng, khi chịu một tác động bên ngoài (nồng độ, nhiệt độ, áp suất) thì cân bằng sẽ chuyển dịch theo chiều làm giảm tác động bên ngoài đó.</p>
+                    <p><i>Ví dụ:</i> Tăng nhiệt độ $\rightarrow$ Cân bằng chuyển dịch theo chiều thu nhiệt.</p>
+                </div>
+                <div class="card">
+                    <h3>3. Axit - Bazơ theo Thuyết Brønsted-Lowry</h3>
+                    <p><b>Axit:</b> Chất cho proton (H<sup>+</sup>).</p>
+                    <p><b>Bazơ:</b> Chất nhận proton (H<sup>+</sup>).</p>
+                    <p><b>Chỉ số pH:</b> pH = -lg[H<sup>+</sup>]. Môi trường Axit (pH &lt; 7), Trung tính (pH = 7), Bazơ (pH &gt; 7).</p>
+                </div>
+                <div class="card">
+                    <h3>4. Đơn Chất Nitrogen & Ammonia (NH<sub>3</sub>)</h3>
+                    <p><b>Nitrogen (N<sub>2</sub>):</b> Ở nhiệt độ thường khá trơ do có liên kết ba bền vững.</p>
+                    <p><b>Ammonia (NH<sub>3</sub>):</b> Phân tử có dạng chóp tam giác, tan nhiều trong nước, có tính bazơ yếu và tính khử.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 3: BẢNG TUẦN HOÀN NGUYÊN TỐ HÓA HỌC -->
+        <div id="periodic" class="module">
+            <h2 class="section-title">Bảng Tra Cứu Nguyên Tố Hóa Học (Lớp 11)</h2>
+            
+            <!-- Chú thích -->
+            <div class="ptable-legend">
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #ef4444;"></div> Phi Kim
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #3b82f6;"></div> Kim Loại
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #10b981;"></div> Khí Hiếm
+                </div>
+            </div>
+
+            <!-- Các thẻ nguyên tố chính -->
+            <div class="ptable-grid">
+                <div class="element-card nonmetal">
+                    <div class="element-number">1</div>
+                    <div class="element-symbol">H</div>
+                    <div class="element-name">Hydrogen</div>
+                    <div class="element-mass">1.008</div>
+                </div>
+                <div class="element-card nonmetal">
+                    <div class="element-number">6</div>
+                    <div class="element-symbol">C</div>
+                    <div class="element-name">Carbon</div>
+                    <div class="element-mass">12.011</div>
+                </div>
+                <div class="element-card nonmetal">
+                    <div class="element-number">7</div>
+                    <div class="element-symbol">N</div>
+                    <div class="element-name">Nitrogen</div>
+                    <div class="element-mass">14.007</div>
+                </div>
+                <div class="element-card nonmetal">
+                    <div class="element-number">8</div>
+                    <div class="element-symbol">O</div>
+                    <div class="element-name">Oxygen</div>
+                    <div class="element-mass">15.999</div>
+                </div>
+                <div class="element-card metal">
+                    <div class="element-number">11</div>
+                    <div class="element-symbol">Na</div>
+                    <div class="element-name">Sodium</div>
+                    <div class="element-mass">22.990</div>
+                </div>
+                <div class="element-card metal">
+                    <div class="element-number">12</div>
+                    <div class="element-symbol">Mg</div>
+                    <div class="element-name">Magnesium</div>
+                    <div class="element-mass">24.305</div>
+                </div>
+                <div class="element-card metal">
+                    <div class="element-number">13</div>
+                    <div class="element-symbol">Al</div>
+                    <div class="element-name">Aluminium</div>
+                    <div class="element-mass">26.982</div>
+                </div>
+                <div class="element-card nonmetal">
+                    <div class="element-number">15</div>
+                    <div class="element-symbol">P</div>
+                    <div class="element-name">Phosphorus</div>
+                    <div class="element-mass">30.974</div>
+                </div>
+                <div class="element-card nonmetal">
+                    <div class="element-number">16</div>
+                    <div class="element-symbol">S</div>
+                    <div class="element-name">Sulfur</div>
+                    <div class="element-mass">32.06</div>
+                </div>
+                <div class="element-card nonmetal">
+                    <div class="element-number">17</div>
+                    <div class="element-symbol">Cl</div>
+                    <div class="element-name">Chlorine</div>
+                    <div class="element-mass">35.45</div>
+                </div>
+                <div class="element-card metal">
+                    <div class="element-number">19</div>
+                    <div class="element-symbol">K</div>
+                    <div class="element-name">Potassium</div>
+                    <div class="element-mass">39.098</div>
+                </div>
+                <div class="element-card metal">
+                    <div class="element-number">20</div>
+                    <div class="element-symbol">Ca</div>
+                    <div class="element-name">Calcium</div>
+                    <div class="element-mass">40.078</div>
+                </div>
+                <div class="element-card metal">
+                    <div class="element-number">26</div>
+                    <div class="element-symbol">Fe</div>
+                    <div class="element-name">Iron</div>
+                    <div class="element-mass">55.845</div>
+                </div>
+                <div class="element-card metal">
+                    <div class="element-number">29</div>
+                    <div class="element-symbol">Cu</div>
+                    <div class="element-name">Copper</div>
+                    <div class="element-mass">63.546</div>
+                </div>
+                <div class="element-card noble">
+                    <div class="element-number">18</div>
+                    <div class="element-symbol">Ar</div>
+                    <div class="element-name">Argon</div>
+                    <div class="element-mass">39.948</div>
+                </div>
+            </div>
+
+            <!-- Bảng ghi nhớ số oxi hóa trọng tâm -->
+            <div class="card" style="margin-top: 1.5rem;">
+                <h3><i class="fa-solid fa-bookmark"></i> Số Oxi Hóa Thường Gặp (Chương Trình Hóa 11)</h3>
+                <p><b>Nitrogen (N):</b> -3 (NH<sub>3</sub>), 0 (N<sub>2</sub>), +1 (N<sub>2</sub>O), +2 (NO), +4 (NO<sub>2</sub>), +5 (HNO<sub>3</sub>).</p>
+                <p><b>Sulfur (S):</b> -2 (H<sub>2</sub>S), 0 (S), +4 (SO<sub>2</sub>), +6 (H<sub>2</sub>SO<sub>4</sub>).</p>
+                <p><b>Carbon (C):</b> -4 (CH<sub>4</sub>), 0 (C), +2 (CO), +4 (CO<sub>2</sub>).</p>
+            </div>
+        </div>
+
+        <!-- MODULE 4: TRẮC NGHIỆM -->
+        <div id="practice" class="module">
+            <h2 class="section-title">Luyện Tập Trắc Nghiệm Thông Minh</h2>
+            <div class="quiz-container">
+                <div id="quiz-box">
+                    <h3 id="quiz-question">Câu hỏi 1: Ở trạng thái cân bằng hóa học, nhận xét nào sau đây đúng?</h3>
+                    <div id="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false)">A. Phản ứng dừng lại hoàn toàn.</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true)">B. Tốc độ phản ứng thuận bằng tốc độ phản ứng nghịch.</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false)">C. Nồng độ chất sản phẩm luôn lớn hơn nồng độ chất đầu.</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false)">D. Nồng độ các chất trong hệ thay đổi liên tục.</button>
+                    </div>
+                    <p id="quiz-explanation" style="margin-top: 1rem; font-weight: bold; display: none;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 5: THÍ NGHIỆM -->
+        <div id="lab" class="module">
+            <h2 class="section-title">Phòng Thí Nghiệm Trực Quan</h2>
+            <div class="grid">
+                <!-- Thí nghiệm 1 -->
+                <div class="card">
+                    <h3>Thí Nghiệm Chuẩn Độ Axit - Bazơ</h3>
+                    <p>Mô tả kĩ thuật chuẩn độ dung dịch NaOH bằng dung dịch HCl chuẩn sử dụng chỉ thị phenolphthalein.</p>
+                    <div style="position: relative; border-radius: 8px; overflow: hidden; background: #000; text-align: center;">
+                        <img src="https://img.youtube.com/vi/5oWusTftpEY/hqdefault.jpg" alt="Thí nghiệm Chuẩn độ" style="width: 100%; display: block; opacity: 0.85;">
+                        <a href="https://www.youtube.com/watch?v=5oWusTftpEY" target="_blank" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #ff0000; color: white; padding: 12px 20px; border-radius: 5px; font-weight: bold; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-play"></i> Xem Video Trên YouTube
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Thí nghiệm 2 -->
+                <div class="card">
+                    <h3>Phản Ứng Giữa H<sub>2</sub>SO<sub>4</sub> Đặc Và Đường</h3>
+                    <p>Hiện tượng H<sub>2</sub>SO<sub>4</sub> đặc hút nước của Sucrose làm than hóa và đẩy cột cacbon trồi lên khỏi cốc.</p>
+                    <div style="position: relative; border-radius: 8px; overflow: hidden; background: #000; text-align: center;">
+                        <img src="https://img.youtube.com/vi/nMOPu-rZpw8/hqdefault.jpg" alt="Thí nghiệm H2SO4 và đường" style="width: 100%; display: block; opacity: 0.85;">
+                        <a href="https://www.youtube.com/watch?v=nMOPu-rZpw8" target="_blank" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #ff0000; color: white; padding: 12px 20px; border-radius: 5px; font-weight: bold; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-play"></i> Xem Video Trên YouTube
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Website Học Tập Hóa Học Lớp 11 | Được xây dựng bởi Thùy Dương và Tổ 2 lớp 11A2</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        function showModule(moduleId) {
+            const modules = document.querySelectorAll('.module');
+            modules.forEach(m => m.classList.remove('active'));
+            document.getElementById(moduleId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function checkAnswer(button, isCorrect) {
+            const options = button.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.disabled = true);
+
+            const expText = document.getElementById('quiz-explanation');
+            expText.style.display = 'block';
+
+            if (isCorrect) {
+                button.classList.add('correct');
+                expText.innerText = "Chính xác! Cân bằng hóa học là cân bằng động, tại đó tốc độ phản ứng thuận bằng tốc độ phản ứng nghịch.";
+                expText.style.color = "#15803d";
+            } else {
+                button.classList.add('incorrect');
+                expText.innerText = "Chưa chính xác! Hãy chọn câu B vì tại trạng thái cân bằng v_thuận = v_nghịch.";
+                expText.style.color = "#b91c1c";
+            }
+        }
+    </script>
+</body>
+</html>
